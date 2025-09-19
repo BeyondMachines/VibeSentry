@@ -1,0 +1,45 @@
+repos:
+
+  # gitleaks for secrets hunting
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.0  # Specify the desired version of Gitleaks
+    hooks:
+      - id: gitleaks
+
+  # Semgrep for security issues
+  - repo: https://github.com/semgrep/semgrep
+    rev: v1.45.0  # Use latest stable version
+    hooks:
+      - id: semgrep
+        args: ['--config=auto', '--error']
+        # Optional: specify file types to scan for better performance
+        # files: \.(py|js|jsx|ts|tsx|java|go|rb|php|c|cpp|cs)$
+
+    # Bandit for python specific items detection
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5  # Use latest version
+    hooks:
+      - id: bandit
+        args: ['-r', '.']
+
+  - repo: local
+    hooks:
+      # # Bandit for python pattern detection
+      # - id: bandit
+      #   name: bandit
+      #   description: 'Bandit is a tool for finding common security issues in Python code'
+      #   entry: bandit
+      #   language: python
+      #   language_version: python3
+      #   types: [python]
+      #   require_serial: true
+          
+      # JavaScript/TypeScript security analysis
+      - id: eslint-detector
+        name: ESLint Security Detector
+        entry: bash
+        args: ['-c', 'vibesentry/eslint.sh']
+        language: system
+        # Only run on JS/TS files for better performance
+        files: \.(js|mjs|cjs|jsx|ts|tsx)$
+        pass_filenames: false
