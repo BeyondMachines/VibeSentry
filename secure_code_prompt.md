@@ -10,6 +10,7 @@ CRITICAL SECURITY REQUIREMENTS:
 
 2. ALWAYS implement:
    - Parameterized queries for all database operations
+   - Locked down infrastructure (nothing publicly accessible without credentials)
    - Input sanitization using established libraries
    - Proper authentication and authorization checks
    - Secure random generation for tokens/IDs
