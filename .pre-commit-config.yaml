@@ -2,13 +2,13 @@ repos:
 
   # gitleaks for secrets hunting
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.18.0  # Specify the desired version of Gitleaks
+    rev: v8.28.0  # Specify the desired version of Gitleaks
     hooks:
       - id: gitleaks
 
   # Semgrep for security issues
   - repo: https://github.com/semgrep/semgrep
-    rev: v1.45.0  # Use latest stable version
+    rev: v1.89.0  # Use latest stable version
     hooks:
       - id: semgrep
         args: ['--config=auto', '--error']
@@ -17,10 +17,21 @@ repos:
 
     # Bandit for python specific items detection
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.5  # Use latest version
+    rev: 1.8.6  # Use latest version
     hooks:
       - id: bandit
         args: ['-r', '.']
+
+  # Checkov for Infrastructure as Code security scanning
+  - repo: https://github.com/bridgecrewio/checkov
+    rev: 3.2.471  #  latest version
+    hooks:
+      - id: checkov
+        args: ['--framework', 'terraform,cloudformation,kubernetes,dockerfile']
+        # Only run on IaC files for better performance
+        files: \.(tf|tfvars|yaml|yml|json|dockerfile|Dockerfile)$
+        # Exclude test directories and examples
+        exclude: ^(tests/|examples/|\.terraform/)
 
   - repo: local
     hooks:
